@@ -1,3 +1,4 @@
+
 document.getElementById('inp-btn').addEventListener('click', () => {
     const inpText = document.getElementById('inp-field').value.trim();
     if (inpText.length === 0) {
@@ -23,30 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
 function addTaskToDOM(task, completed) {
     const taskDiv = document.createElement('div');
     taskDiv.innerHTML = `
-        <h4 class="task ${completed ? 'complete' : ''}">${task}</h4>
-        <div>
-            <i class="fa-regular fa-pen-to-square edit-btn"></i>
-            <i class="fa-regular fa-trash-can"></i>
-        </div>`;
+                <div id="task-content">
+                    <i class="fa-solid fa-check" style="display: ${completed ? 'block' : 'none'};"></i>
+                    <h4 class="task ${completed ? 'complete' : ''}">${task}</h4>
+                </div>
+                
+                <div>
+                    <i class="fa-regular fa-pen-to-square edit-btn"></i>
+                    <i class="fa-regular fa-trash-can"></i>
+                </div>`;
 
     document.getElementById('to-do').appendChild(taskDiv);
 
-    // delete task
+    // Delete task
     taskDiv.querySelector('.fa-trash-can').addEventListener('click', (event) => {
         let taskElement = event.target.closest('div').parentElement;
         removeTaskFromLocalStorage(taskElement.querySelector('.task').textContent);
         taskElement.remove();
     });
 
-    // task done
+    // Task done
     taskDiv.querySelector('.task').addEventListener('click', (event) => {
-        event.target.classList.toggle('complete');
-        toggleTaskCompletion(task);
+        toggleTaskCompletion(event.target);
     });
 
-    // edit task
+    // Edit task
     taskDiv.querySelector('.edit-btn').addEventListener('click', (event) => {
-        const taskElement = event.target.closest('div').previousElementSibling;
+        const taskElement = event.target.closest('div').previousElementSibling.querySelector('.task');
         const newTask = prompt("Edit your task:", taskElement.textContent);
         if (newTask !== null && newTask.trim() !== "") {
             updateTaskInLocalStorage(taskElement.textContent, newTask.trim());
@@ -61,11 +65,15 @@ function removeTaskFromLocalStorage(task) {
     localStorage.setItem('tasks', JSON.stringify(taskList));
 }
 
-function toggleTaskCompletion(task) {
+function toggleTaskCompletion(taskElement) {
+    const taskText = taskElement.textContent;
     let taskList = JSON.parse(localStorage.getItem('tasks')) || [];
     taskList = taskList.map(t => {
-        if (t.task === task) {
+        if (t.task === taskText) {
             t.completed = !t.completed;
+            taskElement.classList.toggle('complete', t.completed);
+            const checkIcon = taskElement.previousElementSibling; // Complete task icon
+            checkIcon.style.display = t.completed ? 'block' : 'none';
         }
         return t;
     });
@@ -94,3 +102,4 @@ function filterTasks(completed = null) {
     document.getElementById('to-do').innerHTML = '<h3>to do list</h3>';
     filteredTasks.forEach(task => addTaskToDOM(task.task, task.completed));
 }
+

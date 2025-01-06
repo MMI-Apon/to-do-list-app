@@ -73,15 +73,23 @@ h3{
     padding: 20px 30px 15px 30px;
         
 }
-#to-do>div>h4{
-     border-bottom: 3px solid rgb(212, 207, 207);
-
+#to-do>div h4{
+    border-bottom: 3px solid rgb(212, 207, 207);
+    
  }
+ #task-content{
+    display: flex;
+    text-align: center;
+    align-items: center;
+ }
+ 
  #to-do>div i{
     padding: 10px;
     background-color: #8d7cf8;
     color: white;
     border-radius: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
  }
  #to-do>div i:hover{
     background-color: #A294F9;
@@ -89,8 +97,9 @@ h3{
  #to-do>div i:active{
     background-color: black;
  }
- .complete{
-    text-decoration: line-through;
+
+#task-complete{
+    background: white;
  }
 
  #filters {
