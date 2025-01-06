@@ -77,21 +77,45 @@ h3{
      border-bottom: 3px solid rgb(212, 207, 207);
 
  }
- #to-do>div>i{
+ #to-do>div i{
     padding: 10px;
     background-color: #8d7cf8;
     color: white;
     border-radius: 3px;
  }
- #to-do>div>i:hover{
+ #to-do>div i:hover{
     background-color: #A294F9;
  }
- #to-do>div>i:active{
+ #to-do>div i:active{
     background-color: black;
  }
  .complete{
     text-decoration: line-through;
  }
+
+ #filters {
+    margin-top: 20px;
+}
+
+#filters button {
+    border: none;
+    padding: 10px 20px;
+    background-color: #8d7cf8;
+    color: white;
+    border-radius: 5px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+#filters button:hover {
+    background-color: #A294F9;
+}
+
+#filters button:active {
+    background-color: black;
+}
+
+
 
  @media only screen and (max-width: 500px) {
     #input{
